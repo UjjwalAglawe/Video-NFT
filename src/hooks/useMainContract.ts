@@ -6,21 +6,26 @@ import { useTonClient } from "./useTonClient";
 import { useTonConnect } from "./useTonConnect";
 import { NFTCollection } from "../wrappers/NFTCollection";
 // import { NftItem } from "../wrappers/NftItem";
-
+// import { useState } from "react";
 export function useCounterContract() {
     const { client } = useTonClient();
     const { wallet , sender } = useTonConnect();
     const sleep = (time: number) => new Promise((resolve) =>
         setTimeout(resolve, time));
     // const [count, setCount] = useState<BigInt | null>(null);
-    const forinti=0;
+    // const forinti=0;
     const nftContract = useAsyncInitialize(async () => {
         if (!client || !wallet) return;
-
         const Contract=NFTCollection.fromAddress(Address.parse("EQBRC9XpIDHl8AqdI46j4nzx1GXTuDroDG5EC8hkoyWrxOiJ"));
 
         return client.open(Contract) as OpenedContract<NFTCollection>;
     }, [client, wallet]);
+
+    // const [contractData, setContractData] = useState<{
+    //     counter_value: number;
+    //     recent_sender: Address;
+    //     owner_address: Address;
+    // } | null>(null);
 
     // async function getData() {
     //     const nftItemdata=await nftContract?.getGetCollectionData();
@@ -50,7 +55,9 @@ export function useCounterContract() {
     //change the contract
      async function Minting() {
         if (!nftContract) return;
-
+        if(!wallet) return;
+        console.log("nft contract . address",(nftContract.address));
+        
         //sending transcation
         const transcation=await nftContract.send(sender,{
             value:toNano("0.003")
@@ -66,9 +73,9 @@ export function useCounterContract() {
         // console.log(nftItemData);
         
     }
-    useEffect(()=>{
+    // useEffect(()=>{
         
-    },[forinti])
+    // },[forinti])
     // async function increase() {
     //     const increaseResult = await countContract?.send(
     //         sender,
@@ -86,10 +93,37 @@ export function useCounterContract() {
         
     // }
 
+    useEffect(() => {
+        async function getValue() {
+            if (!nftContract) return;
+            // setContractData(null);
+            // const val = await nftContract.address;
+            console.log("sender ",sender);
+            console.log("get Owner",nftContract.getOwner())
+            
+            // const balance = await nftContract.getBalance();
+
+            // setContractData({
+            //     counter_value: val.number,
+            //     recent_sender: val.recent_sender,
+            //     owner_address: val.owner_address,
+            // });
+
+            // setContractBalance(balance.number);
+
+            await sleep(5000);
+            getValue();
+        }
+        getValue();
+    }, [nftContract]);
 
     return {
         // counts:count,
         Minting:Minting,
+        // sendReq:async (val: number)=>{
+        //     return nftContract?.send(sender,{value:toNano(val.toString())},"Mint");
+        // },
+        getOwner:nftContract?.getOwner(),
         // increase:increase,
     };
 }

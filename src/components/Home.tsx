@@ -15,22 +15,37 @@ interface dataItem {
 
 const Home = () => {
 
+
   useEffect(() => {
     document.title = "Home"
   }, []);
 
-  const { Minting } = useCounterContract();
-
+  const { Minting, getOwner } = useCounterContract();
+  console.log("This is owner", getOwner);
+  const owner = getOwner;
 
   const openNFT = async (data: any) => {
 
     Minting().then(() => {
-      alert("Transaction Done");
-      setNftitem(data);
-      setToggle(true);
+      if (owner === undefined) return alert('Please connect your wallet');
+      else {
+        alert("Transaction Done");
+        setNftitem(data);
+        setToggle(true);
+      }
+
     }).catch((err) => {
       alert("Transaction fail" + err)
     })
+
+    //   sendReq(data.price).then(()=>{
+    //     alert("Transaction done");
+    //     setNftitem(data);
+    //     setToggle(true);
+    //   }).catch((err)=>{
+    //     alert("tranaction fail "+ err)
+    // })
+
   }
 
   const Changestate = async () => {
@@ -97,10 +112,10 @@ const Home = () => {
         toggle ? <Info Changestate={Changestate} nftitem={nftitem} />
           :
           <div className="flex flex-wrap gradient-bg-welcome min-h-screen  gap-10 justify-center pt-24 pb-5 px-16">
-            {items.filter(item => item.size <400 ).map((item: any) => (
+            {items.filter(item => item.size < 400).map((item: any) => (
               <Cards item={item} openNFT={openNFT} />
             ))}
-            
+
           </div>
       }
 
@@ -109,7 +124,7 @@ const Home = () => {
 }
 export default Home
 
-            {/* {items.map((item: Item, index: number) => (
+{/* {items.map((item: Item, index: number) => (
               // <Cards key={index} item={item} openNFT={openNFT} />
               <Cards item={item} openNFT={openNFT} />
             ))} */}
