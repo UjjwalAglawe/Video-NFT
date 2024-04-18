@@ -14,7 +14,7 @@ function Nav() {
 
     <div className='w-1/2 flex justify-around px-6'>
           <Link className='no-underline text-gray-200 text-lg font-semibold hover:text-xl' to="/">Home</Link>
-          {/* <Link className='no-underline text-gray-200 text-lg font-semibold hover:text-xl' to="/create">Create</Link> */}
+          <Link className='no-underline text-gray-200 text-lg font-semibold hover:text-xl' to="/create">Create</Link>
           {/* <Link className='no-underline text-gray-200 text-lg font-semibold hover:text-xl' to="/my-listed-nfts">My Listed Items</Link>
           <Link className='no-underline text-gray-200 text-lg font-semibold hover:text-xl' to="/my-purchases">My Purchases</Link> */}
         </div>
