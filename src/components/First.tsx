@@ -1,7 +1,7 @@
 import React from 'react';
 import Ar from '../assets/Ar.svg';
 import { Link } from 'react-router-dom';
-import { TonConnectButton } from '@tonconnect/ui-react';
+// import { TonConnectButton } from '@tonconnect/ui-react';
 
 const First: React.FC = () => {
   return (
