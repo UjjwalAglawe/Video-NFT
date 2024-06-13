@@ -95,6 +95,7 @@ const Home = () => {
       .then((files: dataItem) => {
         setItems(files.rows);
         console.log(files.rows);
+        
         // const jsonItems = files.rows.filter((item: Item) => item.ipfs_pin_hash.endsWith(".json"));
         // setItems(jsonItems);
       })
@@ -111,7 +112,7 @@ const Home = () => {
       {
         toggle ? <Info Changestate={Changestate} nftitem={nftitem} />
           :
-          <div className="flex flex-wrap gradient-bg-welcome min-h-screen  gap-10 justify-center pt-24 pb-5 px-16">
+          <div className="gradient-bg-welcome flex justify-center min-h-screen">
             {items.filter(item => item.size < 400).map((item: any) => (
               <Cards item={item} openNFT={openNFT} />
             ))}
